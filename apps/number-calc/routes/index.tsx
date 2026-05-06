@@ -232,10 +232,10 @@ function ResultGroup({
         className="flex w-full items-baseline gap-3 text-left"
         onClick={() => setOpen((o) => !o)}
       >
-        <span className="w-12 text-right font-mono text-lg tabular-nums">{value}</span>
-        <span className="text-xs text-muted-foreground">差 {distance}</span>
-        <span className="ml-auto text-xs text-muted-foreground">{exprs.length} 式</span>
-        <span className="w-4 text-muted-foreground">{open ? '▾' : '▸'}</span>
+        <span className="min-w-12 shrink-0 text-right font-mono text-lg tabular-nums">{value}</span>
+        <span className="shrink-0 text-xs text-muted-foreground">差 {distance}</span>
+        <span className="ml-auto shrink-0 text-xs text-muted-foreground">{exprs.length} 式</span>
+        <span className="w-4 shrink-0 text-muted-foreground">{open ? '▾' : '▸'}</span>
       </button>
       {open && (
         <ul className="mt-2 space-y-1 pl-15">
