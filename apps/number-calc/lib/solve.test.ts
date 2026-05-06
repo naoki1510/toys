@@ -37,9 +37,15 @@ describe('solve', () => {
     expect(exprs.some((e) => /31\s*-\s*10/.test(e))).toBe(true)
   })
 
-  it('0000 は 0 だけを生成する', () => {
+  it('0000 は 0^0=1 を経由して 0, 1, 2 を生成する', () => {
     const result = solve([0, 0, 0, 0])
-    expect([...result.keys()]).toEqual([0])
+    // 0+0+0+0 = 0, 0^0 = 1, 0^0 + 0^0 = 2
+    expect(result.has(0)).toBe(true)
+    expect(result.has(1)).toBe(true)
+    expect(result.has(2)).toBe(true)
+    // 0^0 + 0^0 のような形で 2 が生成されているはず
+    const exprs2 = result.get(2)!
+    expect(exprs2.some((e) => /0\s*\^\s*0[\s+()]+0\s*\^\s*0/.test(e))).toBe(true)
   })
 
   it('結果は整数だけ(非整数を含まない)', () => {
@@ -73,10 +79,10 @@ describe('bestUnder21', () => {
     expect((best?.expressions.length ?? 0) > 0).toBe(true)
   })
 
-  it('0000 のベスト解は 0', () => {
+  it('0000 のベスト解は 2 (0^0 + 0^0)', () => {
     const result = solve([0, 0, 0, 0])
     const best = bestUnder21(result)
-    expect(best?.value).toBe(0)
+    expect(best?.value).toBe(2)
   })
 
   it('21 を作れない場合はそれ以下の最大値', () => {

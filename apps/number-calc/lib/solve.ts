@@ -91,7 +91,8 @@ function evaluate(expr: Expr): number | null {
       if (r === 0) return null
       return l / r
     case '^':
-      if (l === 0 && r <= 0) return null
+      // 0^0 = 1 (JS の慣行) として許容。0^(-n) は Infinity になるので除外。
+      if (l === 0 && r < 0) return null
       if (l < 0 && !Number.isInteger(r)) return null
       if (Math.abs(r) > 30) return null
       return l ** r
