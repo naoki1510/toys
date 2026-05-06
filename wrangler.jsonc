@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "toys",
+  "compatibility_date": "2025-09-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": {
+    "enabled": true
+  }
+  // カスタムドメイン (toys.naoki1510.net) は Cloudflare ダッシュボードの
+  // Workers & Pages → 該当 Worker → Settings → Triggers → Custom Domains
+  // で追加する。詳細は docs/deployment.md を参照。
+}
