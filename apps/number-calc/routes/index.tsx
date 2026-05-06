@@ -1,6 +1,11 @@
 import { useMemo, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { Button } from '@/components/ui/button'
+import { REGEXP_ONLY_DIGITS } from 'input-otp'
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from '@/components/ui/input-otp'
 import { cn } from '@/lib/utils'
 import {
   bestUnder21,
@@ -35,8 +40,9 @@ function NumberCalcPage() {
   const search = Route.useSearch()
   const navigate = useNavigate({ from: '/number-calc/' })
 
-  const [draft, setDraft] = useState(search.n ?? '')
-  const [committed, setCommitted] = useState(search.n ?? '')
+  const initial = (search.n ?? '').slice(0, 4)
+  const [draft, setDraft] = useState(initial)
+  const [committed, setCommitted] = useState(initial.length === 4 ? initial : '')
 
   const [valueQuery, setValueQuery] = useState('')
   const [opFilter, setOpFilter] = useState<ReadonlySet<Op>>(new Set())
@@ -72,9 +78,15 @@ function NumberCalcPage() {
     return entries
   }, [result, valueQuery, opFilter, sortOrder])
 
-  const commit = () => {
-    setCommitted(draft)
-    navigate({ search: { n: draft || undefined }, replace: true })
+  const onInputChange = (value: string) => {
+    setDraft(value)
+    if (value.length === 4) {
+      setCommitted(value)
+      navigate({ search: { n: value }, replace: true })
+    } else if (value.length === 0 && committed !== '') {
+      setCommitted('')
+      navigate({ search: {}, replace: true })
+    }
   }
 
   const toggleOp = (op: Op) => {
@@ -85,8 +97,6 @@ function NumberCalcPage() {
       return next
     })
   }
-
-  const inputInvalid = committed !== '' && parseInputDigits(committed) === null
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">
@@ -104,27 +114,32 @@ function NumberCalcPage() {
       </header>
 
       <section className="mb-6">
-        <div className="flex gap-2">
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="\d{0,4}"
-            maxLength={4}
-            placeholder="2201"
-            value={draft}
-            onChange={(e) => setDraft(e.target.value.replace(/\D/g, '').slice(0, 4))}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') commit()
-            }}
-            className="flex-1 rounded-md border border-input bg-background px-3 py-2 font-mono text-2xl tracking-widest shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
-          />
-          <Button onClick={commit} disabled={draft.length === 0}>
-            計算
-          </Button>
-        </div>
-        {inputInvalid && (
-          <p className="mt-2 text-sm text-destructive">入力が不正です(4 桁以下の数字のみ)</p>
-        )}
+        <InputOTP
+          maxLength={4}
+          pattern={REGEXP_ONLY_DIGITS}
+          value={draft}
+          onChange={onInputChange}
+          autoFocus
+        >
+          <InputOTPGroup>
+            <InputOTPSlot
+              index={0}
+              className="h-14 w-14 font-mono text-2xl"
+            />
+            <InputOTPSlot
+              index={1}
+              className="h-14 w-14 font-mono text-2xl"
+            />
+            <InputOTPSlot
+              index={2}
+              className="h-14 w-14 font-mono text-2xl"
+            />
+            <InputOTPSlot
+              index={3}
+              className="h-14 w-14 font-mono text-2xl"
+            />
+          </InputOTPGroup>
+        </InputOTP>
       </section>
 
       {best && (
