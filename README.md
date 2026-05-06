@@ -17,7 +17,7 @@
 
 | 名前 | URL | 概要 | 状態 |
 |---|---|---|---|
-| [number-calc](apps/number-calc/docs/index.md) | `/number-calc` | 4 桁数字パズル(21 に近づける)の解探索 | 仕様策定済み・未実装 |
+| [number-calc](apps/number-calc/docs/index.md) | `/number-calc` | 4 桁数字パズル(21 に近づける)の解探索 | 実装済み |
 
 ## クイックスタート
 

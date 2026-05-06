@@ -9,7 +9,7 @@ const toys = [
     name: 'number-calc',
     path: '/number-calc',
     description: '4 桁数字パズル(21 に近づける)の解探索',
-    status: 'WIP',
+    status: 'ready',
   },
 ] as const
 
