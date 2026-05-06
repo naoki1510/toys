@@ -35,7 +35,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       <head>
         <HeadContent />
       </head>
-      <body className="min-h-screen bg-white text-neutral-900 antialiased">
+      <body className="min-h-screen antialiased">
         {children}
         <Scripts />
       </body>
