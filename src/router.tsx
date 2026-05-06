@@ -6,6 +6,8 @@ export function getRouter() {
     routeTree,
     scrollRestoration: true,
     defaultPreload: 'intent',
+    // /foo と /foo/ を別 URL 扱いせず、リダイレクト時にクエリを失わないように
+    trailingSlash: 'preserve',
   })
 }
 
