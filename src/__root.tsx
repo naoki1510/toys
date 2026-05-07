@@ -6,6 +6,12 @@ import {
   HeadContent,
   Scripts,
 } from '@tanstack/react-router'
+import { AppSidebar } from '@/components/app-sidebar'
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
 import stylesUrl from '@/styles.css?url'
 
 export const Route = createRootRoute({
@@ -24,7 +30,15 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <Outlet />
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <header className="sticky top-0 z-10 flex h-12 items-center gap-2 border-b bg-background px-4">
+            <SidebarTrigger />
+          </header>
+          <Outlet />
+        </SidebarInset>
+      </SidebarProvider>
     </RootDocument>
   )
 }
