@@ -6,8 +6,15 @@
   "main": "@tanstack/react-start/server-entry",
   "observability": {
     "enabled": true
-  }
-  // カスタムドメイン (toys.naoki1510.net) は Cloudflare ダッシュボードの
-  // Workers & Pages → 該当 Worker → Settings → Triggers → Custom Domains
-  // で追加する。詳細は docs/deployment.md を参照。
+  },
+  // カスタムドメインと並行して *.workers.dev URL も残す (テスト用)
+  "workers_dev": true,
+  // カスタムドメイン。naoki1510.net Zone が同じ CF アカウントにある前提。
+  // deploy 時に Cloudflare 側で DNS レコードと Custom Domain trigger が自動作成される。
+  "routes": [
+    {
+      "pattern": "toys.naoki1510.net",
+      "custom_domain": true
+    }
+  ]
 }
