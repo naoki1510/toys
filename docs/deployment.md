@@ -18,13 +18,15 @@ pnpm dlx wrangler login
 
 ### 2. カスタムドメインの設定
 
-`naoki1510.net` は Cloudflare で管理されている前提。
+`wrangler.jsonc` の `routes` で宣言済み。`naoki1510.net` Zone が同じ CF アカウントにある前提で、deploy 時に Cloudflare 側で DNS レコードと Custom Domain trigger が自動作成される。
 
-1. Cloudflare ダッシュボード → Workers & Pages → 該当 Worker(初回 deploy 後に作られる) → Settings → Triggers
-2. **Custom Domains** に `toys.naoki1510.net` を追加
-3. Cloudflare が自動的に DNS レコードを作る
+```jsonc
+"routes": [
+  { "pattern": "toys.naoki1510.net", "custom_domain": true }
+]
+```
 
-`wrangler.jsonc` の `routes` でカスタムドメインを宣言する方法もあるが、ダッシュボードで設定したほうがハマりにくい。
+ダッシュボード操作は不要。
 
 ### 3. 初回デプロイ
 
