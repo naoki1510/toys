@@ -25,8 +25,11 @@ export const Route = createFileRoute('/number-calc/')({
 function NumberCalcRoute() {
   const { n = '' } = Route.useSearch()
   const navigate = Route.useNavigate()
+  // n が変わったら state を破棄して再マウント
+  // (戻る/進む・手動 URL 変更で表示と URL が食い違わないように)
   return (
     <NumberCalcPage
+      key={n}
       initialDigits={n}
       onCommit={(value) =>
         navigate({ search: { n: value }, replace: true })

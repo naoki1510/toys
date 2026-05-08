@@ -72,7 +72,8 @@ export function NumberCalcPage({ initialDigits, onCommit, onClear }: Props) {
     if (value.length === 4) {
       setCommitted(value)
       onCommit(value)
-    } else if (value.length === 0 && committed !== '') {
+    } else if (value.length === 0 && (committed !== '' || initialDigits !== '')) {
+      // committed === '' でも URL に 1〜3 桁が残っているケース (?n=1 等) で URL を消すため initialDigits も判定
       setCommitted('')
       onClear()
     }
