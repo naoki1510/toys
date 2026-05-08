@@ -71,13 +71,15 @@ function SidebarProvider({
   // We use openProp and setOpenProp for control from outside the component.
   const [_open, _setOpen] = React.useState(defaultOpen)
   const open = openProp ?? _open
-  const setOpen = React.useCallback(
-    (value: boolean | ((value: boolean) => boolean)) => {
-      const openState = typeof value === "function" ? value(open) : value
+  const setOpen = React.useCallback<SidebarContextProps["setOpen"]>(
+    (value) => {
       if (setOpenProp) {
-        setOpenProp(openState)
+        // Controlled: resolve updater against the current `open` and notify parent.
+        setOpenProp(typeof value === "function" ? value(open) : value)
       } else {
-        _setOpen(openState)
+        // Uncontrolled: pass updater straight through so React batches
+        // multiple toggles correctly (no stale-closure hazard).
+        _setOpen(value)
       }
     },
     [setOpenProp, open]
