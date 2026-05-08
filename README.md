@@ -1,4 +1,4 @@
-# toys
+# Toys
 
 思いついたちょっとした Web アプリの置き場。
 
@@ -14,7 +14,7 @@
 - [新しい toy を追加する](docs/adding-new-toy.md) — 0 から toy を生やす手順
 - [Codex PR レビュー](docs/codex-review.md) — 自動レビュー設定とレビュー指示
 
-## toys 一覧
+## Toys 一覧
 
 | 名前 | URL | 概要 | 状態 |
 |---|---|---|---|

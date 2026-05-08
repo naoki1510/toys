@@ -41,7 +41,7 @@ function <Name>Page() {
     <main className="mx-auto max-w-2xl px-6 py-16">
       <nav className="mb-8 text-sm">
         <Link to="/" className="text-neutral-500 hover:text-neutral-900">
-          ← toys
+          ← Toys
         </Link>
       </nav>
       <h1 className="text-3xl font-bold">&lt;name&gt;</h1>
@@ -80,7 +80,7 @@ const toys = [
 ] as const
 ```
 
-ルート README.md の toys 一覧テーブルにも追加する。
+ルート README.md の Toys 一覧テーブルにも追加する。
 
 ## 7. 中身を書く
 

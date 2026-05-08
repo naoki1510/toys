@@ -19,7 +19,7 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'toys' },
+      { title: 'Toys' },
       { name: 'description', content: '思いついたちょっとした Web アプリの置き場' },
     ],
     links: [{ rel: 'stylesheet', href: stylesUrl }],
