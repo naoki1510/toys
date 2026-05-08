@@ -38,11 +38,11 @@ pnpm deploy
 
 ## 通常のデプロイ
 
+`main` ブランチに push されると GitHub Actions の `Deploy` ワークフローが自動的に走る([CI/CD](#cicd-github-actions) 参照)。手元から直接デプロイしたい場合のみ:
+
 ```bash
 pnpm deploy
 ```
-
-それだけ。
 
 ## デプロイ後の確認
 
@@ -82,5 +82,31 @@ pnpm wrangler secret put MY_API_KEY
 
 ## 環境
 
-- **production**: `toys.naoki1510.net`(`pnpm deploy`)
+- **production**: `toys.naoki1510.net`(`main` への push で自動デプロイ / 手動なら `pnpm deploy`)
 - **staging**: 用意しない。気になる変更はローカルで `wrangler dev` する
+
+## CI/CD (GitHub Actions)
+
+`.github/workflows/` に 2 つのワークフローを置いている。
+
+| ワークフロー | トリガー | 内容 |
+|---|---|---|
+| `ci.yml` | PR / `main` への push | `pnpm install` → `pnpm cf-typegen` → `pnpm test` → `pnpm build` |
+| `deploy.yml` | `main` への push / 手動実行(workflow_dispatch) | CI と同じ手順を踏んだ後、`cloudflare/wrangler-action@v3` で `wrangler deploy` |
+
+`deploy.yml` は CI を待たずに独立して走る (test/build を内包しているので、テストが落ちれば deploy 手前で止まる)。
+
+### 必要な GitHub Secrets
+
+`Settings → Secrets and variables → Actions` で以下を登録:
+
+| 名前 | 取得元 |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare ダッシュボードの [API Tokens](https://dash.cloudflare.com/profile/api-tokens) で発行。テンプレート「Edit Cloudflare Workers」を使うと必要権限がそろう |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare ダッシュボードの Workers & Pages 概要画面の右サイドに表示される Account ID |
+
+参考: [Wrangler CI/CD ドキュメント](https://developers.cloudflare.com/workers/wrangler/ci-cd/)
+
+### 手動実行
+
+GitHub の `Actions` タブから `Deploy` ワークフローを選んで `Run workflow` を押すと任意のブランチでデプロイできる(緊急時のみ。通常は `main` への push でよい)。
