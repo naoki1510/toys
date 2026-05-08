@@ -2,7 +2,7 @@
 
 ## 前提
 
-- Node.js 20 以上
+- Node.js 22 以上 (Wrangler v4 の要件)
 - pnpm 9 以上
 - (デプロイ時のみ) Cloudflare アカウントと `wrangler login` 済み
 
