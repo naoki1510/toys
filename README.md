@@ -1,4 +1,4 @@
-# toys
+# Toys
 
 思いついたちょっとした Web アプリの置き場。
 
@@ -13,7 +13,7 @@
 - [デプロイ](docs/deployment.md) — Cloudflare Workers へのデプロイ手順
 - [新しい toy を追加する](docs/adding-new-toy.md) — 0 から toy を生やす手順
 
-## toys 一覧
+## Toys 一覧
 
 | 名前 | URL | 概要 | 状態 |
 |---|---|---|---|
