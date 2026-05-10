@@ -20,12 +20,12 @@
 
 **1 つの Cloudflare Worker に全 toy を相乗りさせる**。各 toy は TanStack Router の route として分岐する。
 
-| パターン | 採用 | 理由 |
-|---|---|---|
-| toy ごとに別 Worker | ✗ | デプロイ・DNS・wrangler 設定が toy 数だけ増える |
-| サブドメインで分離 | ✗ | DNS 設定が増える、Cookie/状態の分離が必要なケースが少ない |
-| **パスで分離(採用)** | ✓ | URL: `toys.naoki1510.net/<toy-name>`、設定は 1 つ |
-| Pages にまとめる | ✗ | TanStack Start の SSR を活かしたい |
+| パターン             | 採用 | 理由                                                      |
+| -------------------- | ---- | --------------------------------------------------------- |
+| toy ごとに別 Worker  | ✗    | デプロイ・DNS・wrangler 設定が toy 数だけ増える           |
+| サブドメインで分離   | ✗    | DNS 設定が増える、Cookie/状態の分離が必要なケースが少ない |
+| **パスで分離(採用)** | ✓    | URL: `toys.naoki1510.net/<toy-name>`、設定は 1 つ         |
+| Pages にまとめる     | ✗    | TanStack Start の SSR を活かしたい                        |
 
 ## バックエンド方針
 

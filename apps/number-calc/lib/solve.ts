@@ -4,7 +4,12 @@ export const OPERATORS: readonly Op[] = ['+', '-', '*', '/', '^']
 
 export type Expr =
   | { readonly kind: 'num'; readonly value: number; readonly text: string }
-  | { readonly kind: 'bin'; readonly op: Op; readonly left: Expr; readonly right: Expr }
+  | {
+      readonly kind: 'bin'
+      readonly op: Op
+      readonly left: Expr
+      readonly right: Expr
+    }
 
 const num = (n: number): Expr => ({ kind: 'num', value: n, text: String(n) })
 
@@ -42,7 +47,10 @@ function uniquePermutations(arr: readonly number[]): number[][] {
 
 function groupings(perm: readonly number[]): Expr[][] {
   if (perm.length !== 4) throw new Error('expected 4 digits')
-  const a = perm[0]!, b = perm[1]!, c = perm[2]!, d = perm[3]!
+  const a = perm[0]!,
+    b = perm[1]!,
+    c = perm[2]!,
+    d = perm[3]!
   return [
     // (1,1,1,1)
     [num(a), num(b), num(c), num(d)],
@@ -84,9 +92,12 @@ function evaluate(expr: Expr): number | null {
   if (r === null) return null
   if (!Number.isFinite(l) || !Number.isFinite(r)) return null
   switch (expr.op) {
-    case '+': return l + r
-    case '-': return l - r
-    case '*': return l * r
+    case '+':
+      return l + r
+    case '-':
+      return l - r
+    case '*':
+      return l * r
     case '/':
       if (r === 0) return null
       return l / r
@@ -145,7 +156,9 @@ export function format(expr: Expr): string {
 }
 
 function isValidResult(value: number): boolean {
-  return Number.isFinite(value) && Number.isInteger(value) && Math.abs(value) <= 1e9
+  return (
+    Number.isFinite(value) && Number.isInteger(value) && Math.abs(value) <= 1e9
+  )
 }
 
 /**

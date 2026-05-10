@@ -32,7 +32,9 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm cf-typegen
+      # typecheck (内部で routeTree と Cloudflare 型を生成) を build より先に走らせ、
+      # build まで進む前に型エラーで止める。`pnpm build` は vite build のみで型を見ない。
+      - run: pnpm typecheck
 
       - run: pnpm test
 

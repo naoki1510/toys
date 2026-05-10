@@ -10,27 +10,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  verify:
-    name: test & build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      # version は package.json の "packageManager" から読む
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
-
-      # worker-configuration.d.ts (gitignore 済み) を生成。
-      # build 中の型チェックがこの型に依存する場合に必要。
-      - run: pnpm cf-typegen
-
-      - run: pnpm test
-
-      # build は内部で `tsc --noEmit` も走る (package.json 参照)
-      - run: pnpm build
+  # 共有 reusable workflow。`pnpm lint` / `pnpm format:check` / `pnpm typecheck`
+  # / `pnpm test` / `pnpm build` の各 script を並列に呼ぶ前提なので、この repo 側で
+  # `package.json` の script 名を変えるときは `naoki1510/ci-workflows` の README も
+  # 確認すること (input でリネームできる)。
+  vite:
+    uses: naoki1510/ci-workflows/.github/workflows/vite-ci.yml@v1
