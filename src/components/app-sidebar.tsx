@@ -19,9 +19,9 @@ export function AppSidebar() {
       <SidebarHeader>
         <Link
           to="/"
-          className="flex items-center gap-2 rounded-md p-2 hover:bg-sidebar-accent/50"
+          className="hover:bg-sidebar-accent/50 flex items-center gap-2 rounded-md p-2"
         >
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+          <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
             <Blocks className="size-4" />
           </div>
           <span className="font-bold tracking-tight">Toys</span>

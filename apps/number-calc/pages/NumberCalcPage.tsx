@@ -32,7 +32,9 @@ type Props = {
 export function NumberCalcPage({ initialDigits, onCommit, onClear }: Props) {
   const initial = initialDigits.slice(0, 4)
   const [draft, setDraft] = useState(initial)
-  const [committed, setCommitted] = useState(initial.length === 4 ? initial : '')
+  const [committed, setCommitted] = useState(
+    initial.length === 4 ? initial : '',
+  )
 
   const [valueQuery, setValueQuery] = useState('')
   const [opFilter, setOpFilter] = useState<readonly Op[]>([])
@@ -45,7 +47,9 @@ export function NumberCalcPage({ initialDigits, onCommit, onClear }: Props) {
 
   const best = useMemo(() => (result ? bestUnder21(result) : null), [result])
 
-  const filteredEntries = useMemo<readonly [number, readonly string[]][]>(() => {
+  const filteredEntries = useMemo<
+    readonly [number, readonly string[]][]
+  >(() => {
     if (!result) return []
     let entries: [number, readonly string[]][] = [...result.entries()]
 
@@ -72,7 +76,10 @@ export function NumberCalcPage({ initialDigits, onCommit, onClear }: Props) {
     if (value.length === 4) {
       setCommitted(value)
       onCommit(value)
-    } else if (value.length === 0 && (committed !== '' || initialDigits !== '')) {
+    } else if (
+      value.length === 0 &&
+      (committed !== '' || initialDigits !== '')
+    ) {
       // committed === '' でも URL に 1〜3 桁が残っているケース (?n=1 等) で URL を消すため initialDigits も判定
       setCommitted('')
       onClear()
@@ -83,8 +90,9 @@ export function NumberCalcPage({ initialDigits, onCommit, onClear }: Props) {
     <div className="mx-auto w-full max-w-3xl px-6 py-8">
       <header className="mb-6">
         <h1 className="text-3xl font-bold tracking-tight">number-calc</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          4 桁の数字に四則演算 + 累乗を組み合わせて 21 以下でなるべく 21 に近い値を作るパズル。
+        <p className="text-muted-foreground mt-1 text-sm">
+          4 桁の数字に四則演算 + 累乗を組み合わせて 21 以下でなるべく 21
+          に近い値を作るパズル。
         </p>
       </header>
 
@@ -109,12 +117,18 @@ export function NumberCalcPage({ initialDigits, onCommit, onClear }: Props) {
         <Card className="mb-6 gap-3 py-5">
           <CardContent className="px-5">
             <div className="flex items-baseline gap-2">
-              <span className="text-sm text-muted-foreground">⭐ ベスト解 (≤ 21)</span>
-              <span className="text-3xl font-bold tabular-nums">{best.value}</span>
+              <span className="text-muted-foreground text-sm">
+                ⭐ ベスト解 (≤ 21)
+              </span>
+              <span className="text-3xl font-bold tabular-nums">
+                {best.value}
+              </span>
               {best.value !== 21 && (
-                <span className="text-sm text-muted-foreground">差: {21 - best.value}</span>
+                <span className="text-muted-foreground text-sm">
+                  差: {21 - best.value}
+                </span>
               )}
-              <span className="ml-auto text-xs text-muted-foreground">
+              <span className="text-muted-foreground ml-auto text-xs">
                 {best.expressions.length} 式
               </span>
             </div>
@@ -125,7 +139,7 @@ export function NumberCalcPage({ initialDigits, onCommit, onClear }: Props) {
                 </li>
               ))}
               {best.expressions.length > 5 && (
-                <li className="text-xs text-muted-foreground">
+                <li className="text-muted-foreground text-xs">
                   他 {best.expressions.length - 5} 式は下のリストから
                 </li>
               )}
@@ -143,7 +157,9 @@ export function NumberCalcPage({ initialDigits, onCommit, onClear }: Props) {
               inputMode="numeric"
               placeholder="例: 21"
               value={valueQuery}
-              onChange={(e) => setValueQuery(e.target.value.replace(/[^\d-]/g, ''))}
+              onChange={(e) =>
+                setValueQuery(e.target.value.replace(/[^\d-]/g, ''))
+              }
               className="h-8 w-24"
             />
           </label>
@@ -186,7 +202,7 @@ export function NumberCalcPage({ initialDigits, onCommit, onClear }: Props) {
       {result && (
         <section>
           {filteredEntries.length === 0 ? (
-            <p className="text-sm text-muted-foreground">該当なし</p>
+            <p className="text-muted-foreground text-sm">該当なし</p>
           ) : (
             <ul className="divide-y">
               {filteredEntries.map(([value, exprs]) => (
@@ -214,10 +230,16 @@ function ResultGroup({
     <li className="py-2">
       <Collapsible open={open} onOpenChange={setOpen}>
         <CollapsibleTrigger className="group flex w-full items-baseline gap-3 text-left">
-          <span className="min-w-12 shrink-0 text-right font-mono text-lg tabular-nums">{value}</span>
-          <span className="shrink-0 text-xs text-muted-foreground">差 {distance}</span>
-          <span className="ml-auto shrink-0 text-xs text-muted-foreground">{exprs.length} 式</span>
-          <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-90" />
+          <span className="min-w-12 shrink-0 text-right font-mono text-lg tabular-nums">
+            {value}
+          </span>
+          <span className="text-muted-foreground shrink-0 text-xs">
+            差 {distance}
+          </span>
+          <span className="text-muted-foreground ml-auto shrink-0 text-xs">
+            {exprs.length} 式
+          </span>
+          <ChevronRight className="text-muted-foreground size-4 shrink-0 transition-transform group-data-[state=open]:rotate-90" />
         </CollapsibleTrigger>
         <CollapsibleContent>
           <ul className="mt-2 space-y-1 pl-15">
@@ -258,7 +280,9 @@ function ExpressionItem({ expr, value }: { expr: string; value: number }) {
     >
       <span className="text-muted-foreground">{value} =</span>
       <span>{expr}</span>
-      {copied && <span className="ml-1 text-xs text-muted-foreground">copied!</span>}
+      {copied && (
+        <span className="text-muted-foreground ml-1 text-xs">copied!</span>
+      )}
     </Button>
   )
 }
