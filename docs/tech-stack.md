@@ -1,18 +1,18 @@
 # 技術スタック
 
-| レイヤ | 技術 | バージョン目安 |
-|---|---|---|
-| 言語 | TypeScript | 5.x |
-| フレームワーク | TanStack Start (React) | 1.x |
-| ルーター | TanStack Router | 1.x(Start に同梱) |
-| UI ランタイム | React | 19 |
-| スタイル | Tailwind CSS | 4.x |
-| UI コンポーネント | shadcn/ui (Radix ベース) | 最新 |
-| アイコン | lucide-react | 最新 |
-| ビルド | Vite | 7.x |
-| ホスティング | Cloudflare Workers | — |
-| ホスティング CLI | Wrangler | 4.x |
-| パッケージマネージャ | pnpm | 9.x |
+| レイヤ               | 技術                     | バージョン目安    |
+| -------------------- | ------------------------ | ----------------- |
+| 言語                 | TypeScript               | 5.x               |
+| フレームワーク       | TanStack Start (React)   | 1.x               |
+| ルーター             | TanStack Router          | 1.x(Start に同梱) |
+| UI ランタイム        | React                    | 19                |
+| スタイル             | Tailwind CSS             | 4.x               |
+| UI コンポーネント    | shadcn/ui (Radix ベース) | 最新              |
+| アイコン             | lucide-react             | 最新              |
+| ビルド               | Vite                     | 7.x               |
+| ホスティング         | Cloudflare Workers       | —                 |
+| ホスティング CLI     | Wrangler                 | 4.x               |
+| パッケージマネージャ | pnpm                     | 9.x               |
 
 ## 各選定の理由
 

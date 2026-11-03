@@ -5,7 +5,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
   // カスタムドメインと並行して *.workers.dev URL も残す (テスト用)
   "workers_dev": true,
@@ -14,7 +14,7 @@
   "routes": [
     {
       "pattern": "toys.naoki1510.net",
-      "custom_domain": true
-    }
-  ]
+      "custom_domain": true,
+    },
+  ],
 }

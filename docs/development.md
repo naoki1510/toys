@@ -60,10 +60,10 @@ pnpm dlx shadcn@latest add button
 ## 型チェック
 
 ```bash
-pnpm tsc --noEmit
+pnpm typecheck
 ```
 
-`pnpm build` の中で `tsc --noEmit` も走るので、CI 不要なら build を回せばよい。
+`cf-typegen` (Cloudflare の型) と `routes-typegen` (`src/routeTree.gen.ts`) を生成してから `tsc --noEmit` を走らせる。`pnpm build` は `vite build` だけで型は見ないので、型チェックはこちらで行う。
 
 ## ルーター型生成のリセット
 

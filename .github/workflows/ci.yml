@@ -9,28 +9,26 @@ concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# naoki1510/ci-workflows の v2 composite action を使う。
+# vite-lint は `pnpm lint` / `pnpm format:check`、vite-build は `pnpm typecheck` →
+# `pnpm test` → `pnpm build` を呼ぶので、package.json の script 名を変えるときは
+# action の input で合わせること。
 jobs:
-  verify:
-    name: test & build
+  lint:
+    name: lint & format
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      # Node は .node-version、pnpm は package.json の packageManager から読む
+      - uses: naoki1510/ci-workflows/.github/actions/setup-pnpm-node@v2
+      - uses: naoki1510/ci-workflows/.github/actions/vite-lint@v2
 
-      # version は package.json の "packageManager" から読む
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
-
-      # worker-configuration.d.ts (gitignore 済み) を生成。
-      # build 中の型チェックがこの型に依存する場合に必要。
-      - run: pnpm cf-typegen
-
-      - run: pnpm test
-
-      # build は内部で `tsc --noEmit` も走る (package.json 参照)
-      - run: pnpm build
+  build:
+    name: typecheck, test & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: naoki1510/ci-workflows/.github/actions/setup-pnpm-node@v2
+      - uses: naoki1510/ci-workflows/.github/actions/vite-build@v2

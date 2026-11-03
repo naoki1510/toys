@@ -31,9 +31,7 @@ function NumberCalcRoute() {
     <NumberCalcPage
       key={n}
       initialDigits={n}
-      onCommit={(value) =>
-        navigate({ search: { n: value }, replace: true })
-      }
+      onCommit={(value) => navigate({ search: { n: value }, replace: true })}
       onClear={() => navigate({ search: {}, replace: true })}
     />
   )

@@ -25,7 +25,11 @@ describe('solve', () => {
     expect(result.has(21)).toBe(true)
     const exprs = result.get(21)!
     expect(exprs.length).toBeGreaterThan(0)
-    expect(exprs.some((e) => /22\s*-\s*0\s*-\s*1/.test(e) || /22\s*-\s*1\s*-\s*0/.test(e))).toBe(true)
+    expect(
+      exprs.some(
+        (e) => /22\s*-\s*0\s*-\s*1/.test(e) || /22\s*-\s*1\s*-\s*0/.test(e),
+      ),
+    ).toBe(true)
   })
 
   it('3110 は 21 を含む(31-10 相当)', () => {
@@ -45,7 +49,9 @@ describe('solve', () => {
     expect(result.has(2)).toBe(true)
     // 0^0 + 0^0 のような形で 2 が生成されているはず
     const exprs2 = result.get(2)!
-    expect(exprs2.some((e) => /0\s*\^\s*0[\s+()]+0\s*\^\s*0/.test(e))).toBe(true)
+    expect(exprs2.some((e) => /0\s*\^\s*0[\s+()]+0\s*\^\s*0/.test(e))).toBe(
+      true,
+    )
   })
 
   it('結果は整数だけ(非整数を含まない)', () => {

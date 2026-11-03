@@ -14,12 +14,12 @@ export function HomePage() {
   return (
     <div className="mx-auto w-full max-w-2xl px-6 py-12">
       <header className="mb-12 flex items-center gap-3">
-        <div className="flex aspect-square size-12 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+        <div className="bg-primary text-primary-foreground flex aspect-square size-12 items-center justify-center rounded-lg">
           <Blocks className="size-6" />
         </div>
         <div>
           <h1 className="text-4xl font-bold tracking-tight">Toys</h1>
-          <p className="mt-1 text-muted-foreground">
+          <p className="text-muted-foreground mt-1">
             思いついたちょっとした Web アプリの置き場
           </p>
         </div>
@@ -29,7 +29,7 @@ export function HomePage() {
         {toys.map((toy) => (
           <li key={toy.name}>
             <Link to={toy.path} className="block">
-              <Card className="gap-2 py-4 transition-colors hover:bg-accent/50">
+              <Card className="hover:bg-accent/50 gap-2 py-4 transition-colors">
                 <CardHeader>
                   <CardTitle className="text-lg">{toy.name}</CardTitle>
                   <CardDescription>{toy.description}</CardDescription>

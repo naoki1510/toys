@@ -87,12 +87,14 @@ pnpm wrangler secret put MY_API_KEY
 
 ## CI/CD (GitHub Actions)
 
-`.github/workflows/` に 2 つのワークフローを置いている。
+`.github/workflows/` に 2 つのワークフローを置いている。どちらも [`naoki1510/ci-workflows`](https://github.com/naoki1510/ci-workflows) の v2 composite action (`setup-pnpm-node` / `vite-lint` / `vite-build`) を使う。
 
-| ワークフロー | トリガー | 内容 |
-|---|---|---|
-| `ci.yml` | PR / `main` への push | `pnpm install` → `pnpm cf-typegen` → `pnpm test` → `pnpm build` |
-| `deploy.yml` | `main` への push / 手動実行(workflow_dispatch) | CI と同じ手順を踏んだ後、`cloudflare/wrangler-action@v3` で `wrangler deploy` |
+| ワークフロー | トリガー                                       | 内容                                                                                                                                            |
+| ------------ | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ci.yml`     | PR / `main` への push                          | 2 job を並列実行。`lint & format`: `pnpm lint` → `pnpm format:check` / `typecheck, test & build`: `pnpm typecheck` → `pnpm test` → `pnpm build` |
+| `deploy.yml` | `main` への push / 手動実行(workflow_dispatch) | `pnpm typecheck` → `pnpm test` → `pnpm build` の後、`cloudflare/wrangler-action@v3` で `wrangler deploy`                                        |
+
+Node のバージョンは `.node-version`、pnpm のバージョンは `package.json` の `packageManager` から読む。
 
 `deploy.yml` は CI を待たずに独立して走る (test/build を内包しているので、テストが落ちれば deploy 手前で止まる)。
 
@@ -100,10 +102,10 @@ pnpm wrangler secret put MY_API_KEY
 
 `Settings → Secrets and variables → Actions` で以下を登録:
 
-| 名前 | 取得元 |
-|---|---|
-| `CLOUDFLARE_API_TOKEN` | Cloudflare ダッシュボードの [API Tokens](https://dash.cloudflare.com/profile/api-tokens) で発行。テンプレート「Edit Cloudflare Workers」を使うと必要権限がそろう |
-| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare ダッシュボードの Workers & Pages 概要画面の右サイドに表示される Account ID |
+| 名前                    | 取得元                                                                                                                                                           |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Cloudflare ダッシュボードの [API Tokens](https://dash.cloudflare.com/profile/api-tokens) で発行。テンプレート「Edit Cloudflare Workers」を使うと必要権限がそろう |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare ダッシュボードの Workers & Pages 概要画面の右サイドに表示される Account ID                                                                            |
 
 参考: [Wrangler CI/CD ドキュメント](https://developers.cloudflare.com/workers/wrangler/ci-cd/)
 

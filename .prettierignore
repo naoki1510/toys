@@ -1,0 +1,11 @@
+# 自動生成・ビルド成果物・vendor 系。.gitignore / eslint.config.js とほぼ同じものを 3 箇所で同期している。
+src/routeTree.gen.ts
+worker-configuration.d.ts
+dist/
+.output/
+.wrangler/
+.vite/
+.tanstack/
+
+# パッケージマネージャ管理。手で整形しない。
+pnpm-lock.yaml

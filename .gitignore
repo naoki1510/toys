@@ -2,10 +2,11 @@ node_modules/
 .output/
 .vite/
 .wrangler/
+.tanstack/
 dist/
 build/
 
-# 自動生成
+# 自動生成 (.prettierignore / eslint.config.js と同期)
 src/routeTree.gen.ts
 worker-configuration.d.ts
 

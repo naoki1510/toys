@@ -60,7 +60,7 @@ function <Name>Page() {
 export const routes = rootRoute('src/__root.tsx', [
   physical('/', 'src/routes'),
   physical('/number-calc', 'apps/number-calc/routes'),
-  physical('/<name>', 'apps/<name>/routes'),   // ← 追加
+  physical('/<name>', 'apps/<name>/routes'), // ← 追加
 ])
 ```
 

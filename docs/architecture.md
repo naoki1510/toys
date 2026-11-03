@@ -46,13 +46,13 @@ toys/
 
 `apps/<toy-name>/` の中にその toy のすべて(docs, routes, components, lib, etc.)を入れる。toy ディレクトリの外に toy のコードを置かない、toy ディレクトリの中に他の toy のコードを置かない。
 
-| 種類 | 場所 |
-|---|---|
-| 仕様・メモ | `apps/<toy>/docs/` |
-| URL に紐づくページ | `apps/<toy>/routes/` |
+| 種類                 | 場所                     |
+| -------------------- | ------------------------ |
+| 仕様・メモ           | `apps/<toy>/docs/`       |
+| URL に紐づくページ   | `apps/<toy>/routes/`     |
 | toy 内コンポーネント | `apps/<toy>/components/` |
-| toy 内ロジック | `apps/<toy>/lib/` |
-| toy 内 hooks | `apps/<toy>/hooks/` |
+| toy 内ロジック       | `apps/<toy>/lib/`        |
+| toy 内 hooks         | `apps/<toy>/hooks/`      |
 
 ## 仮想ルート(virtual file routes)
 
@@ -77,11 +77,11 @@ vite.config.ts でこの定義を `tanstackStart` プラグインに渡してい
 
 ## URL ルール
 
-| ファイル | URL |
-|---|---|
-| `src/routes/index.tsx` | `/` |
-| `apps/number-calc/routes/index.tsx` | `/number-calc` |
-| `apps/number-calc/routes/about.tsx` | `/number-calc/about` |
+| ファイル                                      | URL                                 |
+| --------------------------------------------- | ----------------------------------- |
+| `src/routes/index.tsx`                        | `/`                                 |
+| `apps/number-calc/routes/index.tsx`           | `/number-calc`                      |
+| `apps/number-calc/routes/about.tsx`           | `/number-calc/about`                |
 | `apps/number-calc/routes/-components/Foo.tsx` | route 化されない(`-` prefix で除外) |
 
 createFileRoute の path 文字列は **マウント後の絶対 URL** を書く。例:
@@ -93,14 +93,14 @@ export const Route = createFileRoute('/number-calc/')({ ... })
 
 ## 共有するもの・しないもの
 
-| 種類 | 共有 | 場所 |
-|---|---|---|
-| shadcn/ui の primitive | ✓ | `src/components/ui/` |
-| Tailwind 設定 | ✓ | `src/styles.css`(Tailwind v4 は CSS でテーマ定義) |
-| `cn()` ヘルパー | ✓ | `src/lib/utils.ts` |
-| 共通レイアウト(html, body, head) | ✓ | `src/__root.tsx` |
-| toy 個別のドメインロジック | ✗ | `apps/<toy>/lib/` |
-| toy 個別のコンポーネント | ✗ | `apps/<toy>/components/` |
+| 種類                             | 共有 | 場所                                              |
+| -------------------------------- | ---- | ------------------------------------------------- |
+| shadcn/ui の primitive           | ✓    | `src/components/ui/`                              |
+| Tailwind 設定                    | ✓    | `src/styles.css`(Tailwind v4 は CSS でテーマ定義) |
+| `cn()` ヘルパー                  | ✓    | `src/lib/utils.ts`                                |
+| 共通レイアウト(html, body, head) | ✓    | `src/__root.tsx`                                  |
+| toy 個別のドメインロジック       | ✗    | `apps/<toy>/lib/`                                 |
+| toy 個別のコンポーネント         | ✗    | `apps/<toy>/components/`                          |
 
 **早すぎる共通化はしない**。toy 同士で似たコードがあっても、まずは `apps/<toy>/` 内に書く。複数 toy で重複したら `src/` に上げる。
 
@@ -110,8 +110,8 @@ export const Route = createFileRoute('/number-calc/')({ ... })
 
 ```tsx
 // apps/number-calc/routes/index.tsx
-import { Button } from '@/components/ui/button'   // → src/components/ui/button
-import { cn } from '@/lib/utils'                  // → src/lib/utils
+import { Button } from '@/components/ui/button' // → src/components/ui/button
+import { cn } from '@/lib/utils' // → src/lib/utils
 ```
 
 toy 内のコードは **相対 import** で参照する(`../lib/solve` など)。toy をまたいだ import は基本やらない(やりたくなったら src/ に上げる)。
