@@ -13,6 +13,7 @@
 - [デプロイ](docs/deployment.md) — Cloudflare Workers へのデプロイ手順
 - [新しい toy を追加する](docs/adding-new-toy.md) — 0 から toy を生やす手順
 - [Codex PR レビュー](docs/codex-review.md) — 自動レビュー設定とレビュー指示
+- [依存関係の自動更新](docs/dependency-updates.md) — Renovate の設定と更新ポリシー
 
 ## Toys 一覧
 
