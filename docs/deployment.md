@@ -87,12 +87,14 @@ pnpm wrangler secret put MY_API_KEY
 
 ## CI/CD (GitHub Actions)
 
-`.github/workflows/` に 2 つのワークフローを置いている。
+`.github/workflows/` に 2 つのワークフローを置いている。どちらも [`naoki1510/ci-workflows`](https://github.com/naoki1510/ci-workflows) の v2 composite action (`setup-pnpm-node` / `vite-lint` / `vite-build`) を使う。
 
-| ワークフロー | トリガー                                       | 内容                                                                          |
-| ------------ | ---------------------------------------------- | ----------------------------------------------------------------------------- |
-| `ci.yml`     | PR / `main` への push                          | `pnpm install` → `pnpm cf-typegen` → `pnpm test` → `pnpm build`               |
-| `deploy.yml` | `main` への push / 手動実行(workflow_dispatch) | CI と同じ手順を踏んだ後、`cloudflare/wrangler-action@v3` で `wrangler deploy` |
+| ワークフロー | トリガー                                       | 内容                                                                                                                                            |
+| ------------ | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ci.yml`     | PR / `main` への push                          | 2 job を並列実行。`lint & format`: `pnpm lint` → `pnpm format:check` / `typecheck, test & build`: `pnpm typecheck` → `pnpm test` → `pnpm build` |
+| `deploy.yml` | `main` への push / 手動実行(workflow_dispatch) | `pnpm typecheck` → `pnpm test` → `pnpm build` の後、`cloudflare/wrangler-action@v3` で `wrangler deploy`                                        |
+
+Node のバージョンは `.node-version`、pnpm のバージョンは `package.json` の `packageManager` から読む。
 
 `deploy.yml` は CI を待たずに独立して走る (test/build を内包しているので、テストが落ちれば deploy 手前で止まる)。
 

@@ -41,9 +41,9 @@
       "automerge": true
     },
     {
-      "description": "Node.js のバージョンは Wrangler の要件と揃えるので手動で上げる",
+      "description": "Node.js のバージョン (.node-version) は Wrangler の要件と揃えるので手動で上げる",
       "matchDepNames": ["node"],
-      "matchManagers": ["github-actions"],
+      "matchManagers": ["nodenv", "github-actions"],
       "matchUpdateTypes": ["major"],
       "enabled": false
     }

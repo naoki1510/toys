@@ -22,23 +22,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # version は package.json の "packageManager" から読む
-      - uses: pnpm/action-setup@v4
+      # Node は .node-version、pnpm は package.json の packageManager から読む
+      - uses: naoki1510/ci-workflows/.github/actions/setup-pnpm-node@v2
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
-
-      # typecheck (内部で routeTree と Cloudflare 型を生成) を build より先に走らせ、
-      # build まで進む前に型エラーで止める。`pnpm build` は vite build のみで型を見ない。
-      - run: pnpm typecheck
-
-      - run: pnpm test
-
-      - run: pnpm build
+      # typecheck (内部で routeTree と Cloudflare 型を生成) → test → build。
+      # `pnpm build` は vite build のみで型を見ないので、typecheck を先に通す。
+      - uses: naoki1510/ci-workflows/.github/actions/vite-build@v2
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
