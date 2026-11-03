@@ -1,0 +1,51 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":timezone(Asia/Tokyo)",
+    ":dependencyDashboard",
+    ":semanticCommitsDisabled"
+  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "minimumReleaseAge": "3 days",
+  "schedule": ["* 0-6 * * 1"],
+  "prConcurrentLimit": 5,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": ["* 0-6 * * 1"]
+  },
+  "packageRules": [
+    {
+      "description": "minor / patch はまとめて 1 本の PR にし、CI が通れば自動マージ",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "matchCurrentVersion": "!/^v?0\\./",
+      "groupName": "non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "automerge": true
+    },
+    {
+      "description": "0.x は minor でも破壊的変更がありうるので個別 PR・手動マージ",
+      "matchCurrentVersion": "/^v?0\\./",
+      "automerge": false
+    },
+    {
+      "description": "major は個別 PR・手動マージ",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
+    {
+      "description": "GitHub Actions は major 含めて自動マージ (CI で動作確認される)",
+      "matchManagers": ["github-actions"],
+      "automerge": true
+    },
+    {
+      "description": "Node.js のバージョンは Wrangler の要件と揃えるので手動で上げる",
+      "matchDepNames": ["node"],
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    }
+  ]
+}
